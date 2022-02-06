@@ -1,0 +1,55 @@
+var sheet = SpreadsheetApp.openById('15SV9p-c7rqRaM1S7JYgpHbwMC5zSSJKFt8MW3sJjRc8').getSheets()[0];
+
+
+function doGet(data){
+          // define um comando que voce quer executar.(string value)
+  var apiCommand = data.parameter.apiCommand;
+ 
+        // define uma string parao para resposta.
+  var sendBack = "comando api nao valido";
+
+  // "if" sessao para diferentes comandos
+ 
+  if (apiCommand == "setCellValue" ) {
+
+      var cell = sheet.getRange(data.parameter.celladress);
+      cell.setValue(data.parameter.newvalue);
+ 
+      sendBack = data.parameter.newvalue;
+    };
+
+  if (apiCommand == "getCellValue" ) {
+ 
+      var cell = sheet.getRange(data.parameter.celladress);
+      var cellvalue = cell.getValue();
+ 
+      sendBack = cellvalue;
+    }; 
+
+  if (apiCommand == "scanCellValue" ) {
+ 
+      var cell1 = sheet.getRange(data.parameter.celladress1);
+      var cell2 = sheet.getRange(data.parameter.celladress2);
+      var cell3 = sheet.getRange(data.parameter.celladress3);
+      var cell4 = sheet.getRange(data.parameter.celladress4);
+      var cell5 = sheet.getRange(data.parameter.celladress5);
+      var cell6 = sheet.getRange(data.parameter.celladress6);
+      var cell7 = sheet.getRange(data.parameter.celladress7);
+      var cell8 = sheet.getRange(data.parameter.celladress8);
+      var cellvalue1 = cell1.getValue();
+      var cellvalue2 = cell2.getValue();
+      var cellvalue3 = cell3.getValue();
+      var cellvalue4 = cell4.getValue();
+      var cellvalue5 = cell5.getValue();
+      var cellvalue6 = cell6.getValue();
+      var cellvalue7 = cell7.getValue();
+      var cellvalue8 = cell8.getValue();
+ 
+      sendBack = cellvalue1 + "," + cellvalue2 + "," + cellvalue3 + "," + cellvalue4 + "," + cellvalue5+ "," + cellvalue6+ "," + cellvalue7+ "," + cellvalue8;
+    };
+// end "if" section
+ 
+//  "sendBack" e uma string, que retorna para nosso app
+//  more info https://developers.google.com/apps-script/guides/content  
+return ContentService.createTextOutput(sendBack);
+}

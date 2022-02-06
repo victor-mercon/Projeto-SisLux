@@ -1,0 +1,48 @@
+function doPost(data) {
+        // o objeto 'data' contem strings do seu post request
+ 
+        // define a planilha.  
+  var sheet = SpreadsheetApp.openById('15SV9p-c7rqRaM1S7JYgpHbwMC5zSSJKFt8MW3sJjRc8').getSheets()[0];
+              // metodo openById() descrito aqui: 
+              //https://developers.google.com/apps-script/reference/spreadsheet/ spreadsheet-app#openbyidid  
+              // metodo getSheets()[0] descrito:
+              //https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet#getsheets
+ 
+                    //metodo analogo getSheetByName(name) descrito aqui: 
+                    //https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet#getsheetbynamename 
+ 
+ 
+
+ 
+ 
+        // define um comando que voce quer executar.(string value)
+  var apiCommand = data.parameter.apiCommand;
+ 
+        // define uma string parao para resposta.
+  var sendBack = "comando api nao valido";
+ 
+// "if" sessao para diferentes comandos
+ 
+  if (apiCommand == "setCellValue" ) {
+
+      var cell = sheet.getRange(data.parameter.celladress);
+      var col = cell.getColumn();
+      cell.setValue(data.parameter.newvalue);
+ 
+      sendBack =col.getA1Notation() + '/' + data.parameter.newvalue;
+    };
+
+  if (apiCommand == "getCellValue" ) {
+ 
+      var cell = sheet.getRange(data.parameter.celladress);
+      var col = cell.getColumn();
+      var cellvalue = cell.getValue();
+ 
+      sendBack = col.getA1Notation() + '/' + cellvalue;
+    }; 
+// end "if" section
+ 
+//  "sendBack" e uma string, que retorna para nosso app
+//  more info https://developers.google.com/apps-script/guides/content  
+return ContentService.createTextOutput(sendBack);
+}
